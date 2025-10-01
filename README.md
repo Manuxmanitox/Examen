@@ -1,1 +1,171 @@
-# Examen
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cifrado César</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        main {
+            width: 80%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            font-size: 16px;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #5cb85c;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #449d44;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cifrado César</h1>
+        <p>Una herramienta sencilla para cifrar y descifrar mensajes</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>¿Qué es el Cifrado César?</h2>
+            <p>
+                El Cifrado César es uno de los métodos de cifrado más simples y antiguos que se conocen.
+                Es un tipo de cifrado por sustitución en el que cada letra del texto original es reemplazada por otra letra que se encuentra un número fijo de posiciones más adelante en el alfabeto.
+            </p>
+            <p>
+                Por ejemplo, con un desplazamiento de 3, la letra 'A' se reemplazaría por 'D', la 'B' se reemplazaría por 'E', y así sucesivamente.
+                Este método fue utilizado por Julio César para comunicarse con sus generales.
+            </p>
+        </section>
+
+        <section>
+            <h2>Instrucciones</h2>
+            <ol>
+                <li>Ingrese el mensaje que desea cifrar o descifrar en el área de texto.</li>
+                <li>Defina el desplazamiento (el número de posiciones a desplazar cada letra).</li>
+                <li>Haga clic en el botón "Cifrar" para cifrar el mensaje o en el botón "Descifrar" para descifrarlo.</li>
+                <li>El resultado aparecerá en el área de texto de abajo.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Cifrado/Descifrado</h2>
+            <textarea id="textoEntrada" placeholder="Ingrese el mensaje aquí"></textarea>
+            <br>
+            <label for="desplazamiento">Desplazamiento:</label>
+            <input type="number" id="desplazamiento" value="3">
+            <br>
+            <button onclick="cifrar()">Cifrar</button>
+            <button onclick="descifrar()">Descifrar</button>
+            <br>
+            <textarea id="textoSalida" placeholder="Resultado" readonly></textarea>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Cifrado César Examen </p>
+    </footer>
+
+    <script>
+        function cifrar() {
+            const texto = document.getElementById("textoEntrada").value;
+            const desplazamiento = parseInt(document.getElementById("desplazamiento").value);
+            let resultado = "";
+
+            for (let i = 0; i < texto.length; i++) {
+                let char = texto[i];
+                if (char.match(/[a-z]/i)) {  // Cifrar solo letras
+                    const code = texto.charCodeAt(i);
+                    let offset = (char == char.toUpperCase()) ? 65 : 97;
+                    let shiftedCode = ((code - offset + desplazamiento) % 26 + 26) % 26 + offset; // Manejar desplazamientos negativos
+                    char = String.fromCharCode(shiftedCode);
+                }
+                resultado += char;
+            }
+
+            document.getElementById("textoSalida").value = resultado;
+        }
+
+        function descifrar() {
+            const texto = document.getElementById("textoEntrada").value;
+            const desplazamiento = parseInt(document.getElementById("desplazamiento").value);
+            let resultado = "";
+
+            for (let i = 0; i < texto.length; i++) {
+                let char = texto[i];
+                if (char.match(/[a-z]/i)) {  // Descifrar solo letras
+                    const code = texto.charCodeAt(i);
+                    let offset = (char == char.toUpperCase()) ? 65 : 97;
+                    let shiftedCode = ((code - offset - desplazamiento) % 26 + 26) % 26 + offset;  // Manejar desplazamientos negativos
+                    char = String.fromCharCode(shiftedCode);
+                }
+                resultado += char;
+            }
+
+            document.getElementById("textoSalida").value = resultado;
+        }
+    </script>
+</body>
+</html>
